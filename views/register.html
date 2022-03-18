@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/my.css">
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+<div>
+    <div class="top"><p>哈嘿彩票网</p></div>
+    <div class="select padding-60">
+        <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/register">用户注册</a></li>
+            <li><a href="index.html">智能合约</a></li>
+        </ul>
+    </div>
+    <div class="padding-60">
+        <p class="biaoyu">助力扶贫 服务大公益 哈嘿以太坊彩票公益驿站为爱前行</p>
+        <from>
+            <div class="vote">
+                <div>用户名：</div>
+                <div><input placeholder="请输入用户名" id="username"></div>
+                <div>密码：</div>
+                <div><input placeholder="请输入密码" type="password" id="password"></div>
+                <div>
+                    <button class="submit-button" type="button" id="btn">注册</button>
+                </div>
+            </div>
+        </from>
+    </div>
+
+</div>
+<script>
+    let btn = document.getElementById('btn');
+    btn.onclick = function (ev) {
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+        if (username === "" || password === "") {
+            alert("用户名或密码为空");
+        } else {
+            $.ajax({
+                url: "/registerSubmit",
+                type: "POST",
+                data: {
+                    "username": username,
+                    "password": password,
+                },
+                success: function (data) {
+                    console.log(data["code"]);
+                    alert(data["msg"]);
+                }
+            })
+        }
+    };
+</script>
+</body>
+</html>

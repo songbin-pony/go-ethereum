@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/my.css">
+    <script src="../static/js/jquery.min.js"></script>
+</head>
+<body>
+<div>
+    <div class="top"><p>哈嘿彩票网</p></div>
+    <div class="select padding-60">
+        <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/register">用户注册</a></li>
+            <li><a href="index.html">智能合约</a></li>
+        </ul>
+    </div>
+    <div class="padding-60">
+        <p class="biaoyu">助力扶贫 服务大公益 哈嘿以太坊彩票公益驿站为爱前行</p>
+        <from>
+            <div class="vote">
+                <div>用户名：</div>
+                <div><input placeholder="请输入用户名" id="username"></div>
+                <div>交易密码：</div>
+                <div><input placeholder="请输入交易密码" type="password" id="password"></div>
+                <div class="votenum">
+                    <div>
+                        <p style="font-size: 16px;font-weight: bold;padding-right: 15px">投注:</p>
+                    </div>
+                    <div>
+                        <select id="onenum">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <select id="twonum">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <select id="threenum">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <select id="fournum">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <div style="margin-left: 20px">
+                        <select id="fivenum">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <button class="submit-button" type="button" id="btn">投注</button>
+                </div>
+            </div>
+        </from>
+    </div>
+    <div class="padding-60">
+        <table class="gridTable">
+            <thead >
+            <tr>
+                <th class="gridTable-th">投注人</th>
+                <th class="gridTable-th">投注号码</th>
+            </tr>
+            </thead>
+            <tbody id="accounts">
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<p>{{.Website}}</p>
+<script>
+    // 轮询，使用ajax
+    window.setInterval(get_accounts,5000);
+    //升级为ws
+    // let ws = new WebSocket("ws://localhost:8080//get_accounts");
+    // ws.onmessage = function (ev) {
+    //     let data = ev["data"];
+    //     data = $.parseJSON(data);
+    //     let accounts = data["accounts"];
+    //     let accounts_tag = document.getElementById("accounts");
+    //     //删除所有子标签
+    //     let child = accounts_tag.lastElementChild;
+    //     while (child) {
+    //         accounts_tag.removeChild(child);
+    //         child = accounts_tag.lastElementChild;
+    //     }
+    //     for (let i = 0; i < accounts.length; i++) {
+    //         let tr = document.createElement("tr");
+    //         let td1 = document.createElement("td");
+    //         td1.innerText = accounts[i]["account"];
+    //         let td2 = document.createElement("td");
+    //         td2.innerText = accounts[i]["votenum"];
+    //         tr.appendChild(td1);
+    //         tr.appendChild(td2);
+    //         accounts_tag.appendChild(tr);
+    //
+    //     }
+    // };
+    let btn = document.getElementById('btn');
+    btn.onclick = function (ev) {
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+        let onenum = document.getElementById('onenum').value;
+        let twonum = document.getElementById('twonum').value;
+        let threenum = document.getElementById('threenum').value;
+        let fournum = document.getElementById('fournum').value;
+        let fivenum = document.getElementById('fivenum').value;
+        $.ajax({
+            url: "/submit",
+            type: "POST",
+            data: {
+                "username": username,
+                "password": password,
+                "onenum": onenum,
+                "twonum": twonum,
+                "threenum": threenum,
+                "fournum": fournum,
+                "fivenum": fivenum
+            },
+            success: function (data) {
+                console.log(data["code"])
+                alert(data["msg"]);
+            }
+        })
+    };
+
+
+    function get_accounts() {
+        let accounts_tag = document.getElementById("accounts");
+        //删除所有子标签
+        let child = accounts_tag.lastElementChild;
+        while (child) {
+            accounts_tag.removeChild(child);
+            child = accounts_tag.lastElementChild;
+        }
+        $.ajax({
+            url: "/get_accounts",
+            type: "GET",
+            success: function (data) {
+                let accounts = data["accounts"];
+                for (let i = 0; i < accounts.length; i++) {
+                    let tr = document.createElement("tr");
+                    let td1 = document.createElement("td");
+                    td1.innerText = accounts[i]["account"];
+                    td1.className="gridTable-td";
+                    let td2 = document.createElement("td");
+                    td2.innerText = accounts[i]["votenum"];
+                    td2.className="gridTable-td";
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    accounts_tag.appendChild(tr);
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

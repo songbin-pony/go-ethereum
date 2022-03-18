@@ -1,0 +1,86 @@
+.top p{
+    font-size: 40px;
+   font-family: "Adobe 黑体 Std R";
+    font-weight: bold;
+    letter-spacing: 10px;
+}
+.padding-60{
+    padding: 0 80px;
+}
+.top{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+}
+.select a{
+    text-decoration: none;
+    color: white;
+}
+.select ul li{
+    list-style-type: none;
+    float: left;
+    padding: 0 10px;
+    font-size: 18px;
+    height: 40px;
+    line-height: 40px;
+    font-family: "Adobe 黑体 Std R";
+    font-weight: bold;
+}
+.select ul{
+    padding-inline-start: 0px;
+}
+.select ul li:hover{
+    background-color:#cc0000;}
+.select {
+    background-color: red;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.biaoyu{
+    font-size: 30px;
+    font-family: "Adobe 黑体 Std R";
+    font-weight: bold;
+    letter-spacing: 0px;
+    color: red;
+}
+.votenum{
+    display: flex;
+    align-items: center;
+}
+.submit-button{
+    background-color:#FF5809;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    width: 50px;
+    height: 25px;
+}
+.vote{
+    background-color: #ccc;
+    border-radius: 5px;
+    padding: 20px;
+}
+.gridTable {
+    font-family: Consolas;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+}
+.gridTable-th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+.gridTable-td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
