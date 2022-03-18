@@ -1,0 +1,42 @@
+pragma solidity 0.4.22;
+contract Voting{
+    mapping (string=>string)  ballot;
+    mapping (string=>string)  passwd;
+    string[] public accountList;
+    uint8 public accoutNum;
+    function register(string name,string password) public{
+        accountList.push(name);
+        passwd[name]=password;
+        accoutNum+=1;
+    }
+    function validName(string name) public view returns(bool){
+        for (uint i=0;i<accountList.length;i++){
+            if(keccak256(accountList[i])==keccak256(name)){
+                return true;
+            }
+            
+        }
+        return false;
+    }
+    function validPassword(string name,string password) public view returns(bool){
+        if (keccak256(passwd[name])==keccak256(password)){
+            return true;
+        }
+        return false;
+    }
+    function getHaoMa(string name) public view returns(string){
+        if (keccak256(ballot[name])==keccak256("")){
+            return "-1";
+        }
+        return ballot[name];
+    }
+    function buyBallot(string name,string haoma) public returns(bool){
+        if (keccak256(ballot[name])==keccak256("")){
+            ballot[name]=haoma;
+            return true;
+        }
+        return false;
+        
+
+    }
+}
